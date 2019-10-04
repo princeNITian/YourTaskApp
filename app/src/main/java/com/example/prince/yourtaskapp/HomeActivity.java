@@ -136,6 +136,12 @@ public class HomeActivity extends AppCompatActivity {
                 holder.setTitle(model.getTitle());
                 holder.setNote(model.getNote());
                 holder.setDate(model.getDate());
+                holder.myView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        updateData();
+                    }
+                });
             }
 
 
@@ -176,6 +182,16 @@ public class HomeActivity extends AppCompatActivity {
         }
     }
 
+    public void updateData(){
+        AlertDialog.Builder myDialog = new AlertDialog.Builder(HomeActivity.this);
+        LayoutInflater inflater = LayoutInflater.from(HomeActivity.this);
+
+        View myView = inflater.inflate(R.layout.updateinputfield,null);
+        myDialog.setView(myView);
+
+        AlertDialog dialog = myDialog.create();
+        dialog.show();
+    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.mainmenu,menu);
