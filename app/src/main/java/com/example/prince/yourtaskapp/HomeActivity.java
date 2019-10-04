@@ -1,8 +1,10 @@
 package com.example.prince.yourtaskapp;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 //import android.widget.Toolbar;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -29,6 +31,13 @@ public class HomeActivity extends AppCompatActivity {
         fabBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                AlertDialog.Builder myDialog = new AlertDialog.Builder(HomeActivity.this);
+                LayoutInflater inflater = LayoutInflater.from(HomeActivity.this);
+                View myView = inflater.inflate(R.layout.custominputfield,null);
+                myDialog.setView(myView);
+                AlertDialog dialog = myDialog.create();
+                dialog.show();
+
 
             }
         });
