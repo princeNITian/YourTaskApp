@@ -1,5 +1,6 @@
 package com.example.prince.yourtaskapp;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -9,6 +10,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 //import android.widget.Toolbar;
 import com.example.prince.yourtaskapp.Model.Data;
@@ -18,10 +21,14 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import org.w3c.dom.Text;
+
 import java.text.DateFormat;
 import java.util.Date;
 
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 
 public class HomeActivity extends AppCompatActivity {
@@ -33,6 +40,9 @@ public class HomeActivity extends AppCompatActivity {
     private DatabaseReference mDatabase;
 
     private FirebaseAuth mAuth;
+    // Recycler View
+    private RecyclerView recyclerView;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +57,15 @@ public class HomeActivity extends AppCompatActivity {
         FirebaseUser mUser = mAuth.getCurrentUser();
         String uId = mUser.getUid();
         mDatabase = FirebaseDatabase.getInstance().getReference().child("TaskNote");
+
+        // Recycler..
+        recyclerView = findViewById(R.id.recycler);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        layoutManager.setStackFromEnd(true);
+        layoutManager.setReverseLayout(true);
+
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(layoutManager);
 
         fabBtn = findViewById(R.id.fab_btn);
 
@@ -95,5 +114,33 @@ public class HomeActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+    }
+
+    public static class MyViewHolder extends RecyclerView.ViewHolder {
+        View myView;
+        public MyViewHolder(@NonNull View itemView) {
+            super(itemView);
+            myView = itemView;
+        }
+
+        public void setTitle(String title){
+            TextView mTitle = myView.findViewById(R.id.title);
+            mTitle.setText(title);
+        }
+
+        public void setNote(String note){
+            TextView mNote = myView.findViewById(R.id.note);
+            mNote.setText(note);
+        }
+
+        public void setDate(String date){
+            TextView mDate = myView.findViewById(R.id.date);
+            mDate.setText(date);
+        }
     }
 }
